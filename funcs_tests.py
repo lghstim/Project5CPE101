@@ -53,6 +53,18 @@ class TestCases(unittest.TestCase):
       quakes = [quake1, quake2]
       self.assertEqual(quake_funcs.filter_by_mag(quakes, 0.5, 10), [quake1, quake2])
 
+   
+   def test_check_quake_in_list1(self):
+      quake1 = quake_funcs.Earthquake("12km SSW of Idyllwild, CA", 0.97,
+                                      -116.7551651, 33.6391678, 1488177290)
+      quake2 = quake_funcs.Earthquake("13km SSW of Idyllwild, CA", 0.97,
+                                      -116.7551651, 33.6391678, 1488177290)
+      quake3 = quake_funcs.Earthquake("13km SSW of Idyllwild, CA", 0.97,
+                                      -116.7551651, 33.6391678, 14881772900)
+
+      quakes = [quake1, quake2]
+      self.assertFalse(quake_funcs.quake_check_in_list(quake3, quakes))
+
 
    def test_quake_from_feature(self):
       feature = {

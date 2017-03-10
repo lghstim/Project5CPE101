@@ -2,6 +2,7 @@ from quake_funcs import *
 
 def main():
    earthquake_objects = read_quakes_from_file("quakes.txt")
+   print()
    display_quake_data(earthquake_objects)
    choice = None
    while choice != 'q' and choice != 'Q': # while user hasn't quit
@@ -14,7 +15,7 @@ def display_quake_data(earthquake_objects):
    print("Earthquakes:")
    print("------------")
    for quake in earthquake_objects:
-       print('({:.2f}){:>40s} {:s} at ({:8.3f}, {:.3f})'.format(quake.mag, quake.place, time_to_str(quake.time), quake.longitude, quake.latitude))
+       print('({:.2f}) {:>40s} at {:s} ({:8.3f}, {:.3f})'.format(quake.mag, quake.place, time_to_str(quake.time), quake.longitude, quake.latitude))
 
 def prompt_options(earthquake_objects):
    print()

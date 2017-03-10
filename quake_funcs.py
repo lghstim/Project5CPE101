@@ -76,7 +76,7 @@ def filter_quakes(quakes, filter_attribute):
    filtered_quakes = []
    if filter_attribute == 'm' or filter_attribute == 'M':
       low = float(input("Lower bound: "))
-      high = float(input("Higher bound: "))
+      high = float(input("Upper bound: "))
       filtered_quakes = filter_by_mag(quakes, low, high)
    elif filter_attribute == 'p' or filter_attribute == 'P':
       search_string = input("Search for what string? ")
@@ -115,8 +115,10 @@ def quake_from_feature(feature):
 '''If the user chooses to quit, then write the earthquake data back out to the “quakes.txt” file to assure the earthquakes are written in the order they were last sorted, and to assure that any new earthquake data is saved. I suggest writing a function to do this. Note that you must write the data to the file in the same format from which it was read.'''
 def write_data(quakes):
    out_file = open("quakes.txt", "w")
-   for quake in quakes: 
-      out_file.write("{:.2f} {:f} {:f} {:d} {:s}\n".format(quake.mag, quake.longitude, quake.latitude, quake.time, quake.place))
+   for quake in quakes:
+      longitude = float(quake.longitude)
+      latitude = float(quake.latitude)
+      out_file.write("{} {} {} {:d} {:s}\n".format(quake.mag, longitude, latitude, quake.time, quake.place))
    out_file.close()
 
 def quake_check_in_list(quake, quakes):

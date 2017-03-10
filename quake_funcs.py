@@ -64,9 +64,9 @@ def read_quakes_from_file(filename):
 
 def sort_quakes(quakes, sort_attribute): # quakes is mutable
    if sort_attribute == 'm' or sort_attribute == 'M': # descending
-      quakes.sort(key = lambda q:q.mag, reverse = True)
+      quakes.sort(key = lambda q:q.mag, reverse = True) # descending
    elif sort_attribute == 't' or sort_attribute == 'T':
-      quakes.sort(key = lambda q:q.time, reverse = True)
+      quakes.sort(key = lambda q:q.time, reverse = True) # descending
    elif sort_attribute == 'l' or sort_attribute == 'L':
       quakes.sort(key = lambda q:q.longitude)
    elif sort_attribute == 'a' or sort_attribute == 'A':

@@ -37,16 +37,23 @@ class TestCases(unittest.TestCase):
       # call read_file with "test0.txt"
       self.assertEqual(quake_funcs.read_quakes_from_file("test0.txt"), quakes)
 
-   def test_sort_quakes1(self):
-      pass
+   def test_filter_quakes_by_mag1(self):
+      quake1 = quake_funcs.Earthquake("12km SSW of Idyllwild, CA", 0.97,
+                                      -116.7551651, 33.6391678, 1488177290)
+      quake2 = quake_funcs.Earthquake("13km SSW of Idyllwild, CA", 0.97,
+                                      -116.7551651, 33.6391678, 1488177290)
+      quakes = [quake1, quake2]
+      self.assertEqual(quake_funcs.filter_by_mag(quakes, 1, 10), [])
 
-   def test_filter_by_mag1(self):
-      pass
+   def test_filter_quakes_by_mag2(self):
+      quake1 = quake_funcs.Earthquake("12km SSW of Idyllwild, CA", 0.97,
+                                      -116.7551651, 33.6391678, 1488177290)
+      quake2 = quake_funcs.Earthquake("13km SSW of Idyllwild, CA", 0.97,
+                                      -116.7551651, 33.6391678, 1488177290)
+      quakes = [quake1, quake2]
+      self.assertEqual(quake_funcs.filter_by_mag(quakes, 0.5, 10), [quake1, quake2])
 
-   def test_filter_by_place1(self):
-      pass
 
-   '''# Use this test when ready to work on the json data.
    def test_quake_from_feature(self):
       feature = {
           "geometry": {
@@ -91,8 +98,6 @@ class TestCases(unittest.TestCase):
       quake2 = quake_funcs.Earthquake("5km NE of Home Gardens, CA", 1.24,
                                       -117.4906667, 33.9131667, 1488179250)
       self.assertEqual(quake1, quake2)
-   '''
-
 
 # Run the unit tests.
 if __name__ == '__main__':

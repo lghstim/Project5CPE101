@@ -55,27 +55,71 @@ def read_quakes_from_file(filename):
    earthquake_objects = []
    property_list = []
    for line in my_file:
-      line = line.rstrip('\n')
+      line = line.strip() # get rid of \n and white spaces on left and right
       property_list = line.split(' ', 4)
       earthquake_obj = Earthquake(str(property_list[4]), float(property_list[0]), float(property_list[1]), float(property_list[2]), int(property_list[3]))
       earthquake_objects.append(earthquake_obj) 
-   my_file.close()
-      
+   my_file.close() 
    return earthquake_objects
 
-# TODO: Required function - implement me!
+def sort_quakes(quakes, sort_attribute): # quakes is mutable
+   if sort_attribute == 'm' or sort_attribute == 'M': # descending
+      quakes.sort(key = lambda q:q.mag, reverse = True)
+   elif sort_attribute == 't' or sort_attribute == 'T':
+      quakes.sort(key = lambda q:q.time, reverse = True)
+   elif sort_attribute == 'l' or sort_attribute == 'L':
+      quakes.sort(key = lambda q:q.longitude)
+   elif sort_attribute == 'a' or sort_attribute == 'A':
+      quakes.sort(key = lambda q:q.latitude)
+
+def filter_quakes(quakes, filter_attribute):
+   filtered_quakes = []
+   if filter_attribute == 'm' or filter_attribute == 'M':
+      low = float(input("Lower bound: "))
+      high = float(input("Higher bound: "))
+      filtered_quakes = filter_by_mag(quakes, low, high)
+   elif filter_attribute == 'p' or filter_attribute == 'P':
+      search_string = input("Search for what string? ")
+      filtered_quakes = filter_by_place(quakes, search_string)
+   return filtered_quakes
+
+
 def filter_by_mag(quakes, low, high):
-   pass
+   filtered_quakes = []
+   for quake in quakes:
+      if quake.mag >= low and quake.mag <= high:
+         filtered_quakes.append(quake)
+   return filtered_quakes
 
 
-# TODO: Required function - implement me!
+
 def filter_by_place(quakes, word):
-   pass
+   filtered_quakes = []
+   for quake in quakes:      
+      if word.upper() in quake.place.upper(): # compare uppercase
+         filtered_quakes.append(quake)
+   return filtered_quakes
 
 
-# TODO: Required function for final part - implement me too!
+
 def quake_from_feature(feature):
-   pass
+   ''' takes a feature dictionary as input and returns an Earthquake object as output'''
+   place = feature['properties']['place']
+   mag = feature['properties']['mag']
+   longitude = feature['geometry']['coordinates'][0]
+   latitude = feature['geometry']['coordinates'][1]
+   time = int(feature['properties']['time'] / 1000)
+   quake_obj = Earthquake(place, mag, longitude, latitude, time)
+   return quake_obj
 
+'''If the user chooses to quit, then write the earthquake data back out to the “quakes.txt” file to assure the earthquakes are written in the order they were last sorted, and to assure that any new earthquake data is saved. I suggest writing a function to do this. Note that you must write the data to the file in the same format from which it was read.'''
+def write_data(quakes):
+   out_file = open("quakes.txt", "w")
+   for quake in quakes: 
+      out_file.write("{:.2f} {:f} {:f} {:d} {:s}\n".format(quake.mag, quake.longitude, quake.latitude, quake.time, quake.place))
+   out_file.close()
+
+def quake_check_in_list(quake, quakes):
+  return quake in quakes
 
 

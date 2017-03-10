@@ -36,9 +36,21 @@ def prompt_options(earthquake_objects):
       print()
       display_quake_data(filtered_quakes) 
    elif choice == 'n' or choice == 'N': # new quakes
-      pass
+      quakes_dict = get_json('http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_hour.geojson')
+      features_dict = quakes_dict['features']
+      new_quakes_found = False
+      for feature in features_dict:
+         quake = quake_from_feature(feature)
+         if quake_check_in_list(quake, earthquake_objects) == False:
+            earthquake_objects.append(quake) # append new found quake to sorted/unsorted list
+            new_quakes_found = True
+      if new_quakes_found:
+         print()
+         print("New quakes found!!!")
+      print()  
+      display_quake_data(earthquake_objects)
    elif choice == 'q' or choice == 'Q': # quit
-      write_data(earthquake_objects)
+      write_data(earthquake_objects) # write to file
    return choice
 
 

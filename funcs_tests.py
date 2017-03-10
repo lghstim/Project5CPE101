@@ -37,6 +37,15 @@ class TestCases(unittest.TestCase):
       # call read_file with "test0.txt"
       self.assertEqual(quake_funcs.read_quakes_from_file("test0.txt"), quakes)
 
+   def test_sort_quakes1(self):
+      pass
+
+   def test_filter_by_mag1(self):
+      pass
+
+   def test_filter_by_place1(self):
+      pass
+
    '''# Use this test when ready to work on the json data.
    def test_quake_from_feature(self):
       feature = {
